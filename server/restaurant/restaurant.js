@@ -21,43 +21,43 @@ app.use(bodyParser.json());
  * PROCESAR ORDEN
  */
 app.post('/restaurant', (req, res) => {
-    let body = req.body;
-
+    let body = req.body.data;
+    console.log('/********************/');
     console.log('RESTAURANT');
     console.log(body);
     console.log('Processing order...');
-    delay(5000);
-    console.log('Start delivery..');
-
-    axios.post(`http://localhost:${port.DELIVERY_PORT}/delivery`, {
-        data: body.data
-    });
-
-    res.status(200).json({
-        message: 'End of transaction...'
-    });
-
-});
-
-/**
- * ENTREGA COMPLETA
- */
-app.post('/restaurant-c', (req, res) => {
-    let body = req.body;
-    console.log(body);
-
-    console.log('End of delivery...');
-
     delay(2000);
 
-    axios.post(`http://localhost:${port.CLIENT_PORT}/client`, {
-        data: body.data
+    switch (body.from) {
+        case 'client':
+            body.from = 'restaurant'
+            body.to = 'delivery'
+            console.log(body);
+            console.log(`start delivering order ${body.order}`);
+            delay(2000);
+            break;
+        case 'delivery':
+            body.from = 'restaurant'
+            body.to = 'client'
+            console.log(body);
+            delay(2000);
+            console.log(`Notify client end of order ${body.order}`);
+            break;
+        default:
+            console.log('error restaurant');
+
+    }
+    axios.post(`http://localhost:${port.EBS_PORT}/esb`, {
+        data: body
     });
 
     res.status(200).json({
         message: 'End of transaction...'
     });
+
 });
+
+
 
 
 /**
