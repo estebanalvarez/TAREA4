@@ -21,16 +21,18 @@ app.use(bodyParser.json());
  * PROCESAR ENTREGA
  */
 app.post('/delivery', (req, res) => {
-    let body = req.body;
+    let body = req.body.data;
 
     console.log('DELIVERY');
     console.log(body);
-    delay(5000);
+    delay(2000);
     console.log('End of delivery....');
     delay(1000);
+    body.to = 'restaurant';
+    body.from = 'delivery';
 
-    axios.post(`http://localhost:${port.RESTAURANT_PORT}/restaurant-c`, {
-        data: body.data
+    axios.post(`http://localhost:${port.EBS_PORT}/esb`, {
+        data: body
     });
 
 
