@@ -25,11 +25,12 @@ switch (comando) {
     case 'orden':
         console.log(`Nueva orden no. ${argv._[1]}`);
         console.log('CLIENT');
-        console.log(`Date: ${ new Date().getTime()}`);
-        axios.post(`http://localhost:${port.RESTAURANT_PORT}/restaurant`, {
+        axios.post(`http://localhost:${port.EBS_PORT}/esb`, {
             data: {
                 order: argv._[1],
-                time: new Date()
+                time: new Date(),
+                to: 'restaurant',
+                from: 'client'
             }
         });
 
