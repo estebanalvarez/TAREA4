@@ -9,5 +9,5 @@ var zip = require('gulp-zip');
 gulp.task('zip_code', function() {
     return gulp.src('./**')
         .pipe(zip('code.zip'))
-        .pipe(gulp.dest('./code'));
+        .pipe(gulp.dest('./public'));
 });
