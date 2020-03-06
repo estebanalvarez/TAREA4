@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "deb": "npm install && gulp zip_code"
+        "deb": "npm install && gulp zip_code && node artefactos.js"
     },
     "author": "",
     "license": "ISC",
